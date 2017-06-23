@@ -2,8 +2,8 @@ console.warn("First thing doing !");
 
 require('import-export');
 require('node-jsx').install();
-
-
+const volleyball = require('volleyball')
+ 
 var express = require('express');
 var app = express();
 
@@ -12,9 +12,10 @@ var { renderToString } = require('react-dom/server');
 var { App } = require('./browser/react/App');
 var fs = require('fs');
  
+app.use(volleyball)
+
 app.use('/client',express.static('public'));
 
-app.use('/',express.static('public'));
 
 app.get('/server', function(req, res){
   
@@ -24,8 +25,11 @@ app.get('/server', function(req, res){
   res.send(myHtml);
 });
 
+app.use('/server',express.static('public'));
+
 app.get('/', function(req, res){
-  res.send('hello world');
+  res.send('App Cleared');
+  process.stdout.write('\033c');
 });
 
 app.listen(3000); 
